@@ -1,7 +1,8 @@
 ### from CSV to map est une application React
   
 * uploadez un fichier CVS avec dates et adresses (ex : une chronologie de ventes)
-* le fichier CSV doit être formulé ainsi :
+* le fichier CSV doit être formulé ainsi
+
 *postcode;country;date;*
 *"10440";"France";"01/01/2015";*
 *"88046";"Italie";"01/06/2016";*
