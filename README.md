@@ -1,6 +1,8 @@
 ### from CSV to map est une application React
 
-[illustration par un screenshot](https://i.ibb.co/XZ1XSWX/Screenshot-1.jpg)
+[Screenshot de l'application](https://i.ibb.co/XZ1XSWX/Screenshot-1.jpg)
+
+#### Fonctionnement :
   
 * uploadez un fichier CVS avec dates et adresses (ex : une chronologie de ventes)
 * le fichier CSV doit être formulé ainsi :
@@ -11,6 +13,7 @@ postcode;country;date;
 "83043";"Allemagne";"01/01/2016";
 ```
 * l'app convertit les données en tableau JS
+* cliquez sur PLAY
 * les adresses sont converties en coordonnées GPS
 * de ce nouveau tableau, les markers correspondant aux ventes s'affichent chronologiquement sous forme de caddies sur la carte Google maps
 * un compteur affichent l'augmentation du nombre de ventes par pays au fur et à mesure du déploiement des markers
