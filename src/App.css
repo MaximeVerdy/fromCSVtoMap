@@ -2,37 +2,50 @@
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.commands {
+  position: absolute;
+  z-index: 1;
+  top: 50px;
+  left: 2px;
+  padding: 5px;
+  border-radius: 15px;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.rows {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  padding: 0px;
 }
 
-.App-link {
-  color: #61dafb;
+.buttons {
+  padding-top: 2px;
+  padding: 0px 3px;
+  height: 43px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.salesByCountry {
+  padding-left: 3px;
+  height: 8px;
+  font-size: 17px;
+}
+
+.sales {
+  padding-left: 3px;
+  height: 8px;
+  font-size: 17px;
+  font-weight: 650;
+}
+
+.errorMessage {
+  position: absolute;
+  z-index: 2;
+  transform: translate(-50%, -50%);
+  font-weight: bold;
+  top: 50%;
+  left: 50%;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  text-align: center;
+  width: 80vw;
 }
