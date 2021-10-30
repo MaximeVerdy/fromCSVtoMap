@@ -116,11 +116,20 @@ const Map = () => {
 
       var justPostalCode = sale[0].slice(1, 20).slice(0, -1).toString()
       var justCountry = sale[1].slice(1, 20).slice(0, -1).toString()
-      var address = `${justPostalCode}, ${justCountry}`
+
+      if(justCountry === 'Corse'){
+        var address = `${justPostalCode}, France`
+      } else {
+        var address = `${justPostalCode}, ${justCountry}`
+      }
 
       if (countriesArray.length <= sales.length) {
         // ajout en array des pays à chaque fois qu'une vente est faite. Ce sera utilisé en ligne 159, là où on crée un compteur de ventes par pays
-        setCountriesArray(countriesArray => [...countriesArray, justCountry])
+        if(justCountry === 'Corse'){
+          setCountriesArray(countriesArray => [...countriesArray, 'France'])
+        } else {
+          setCountriesArray(countriesArray => [...countriesArray, justCountry])
+        }
       }
 
       // geolocation avec GeoCode à partir d'une adresses exactes
