@@ -1,5 +1,5 @@
 // import du frameword et des libraries
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
 import Geocode from "react-geocode";
 import APIKEY from '../someKeys.js'
@@ -10,11 +10,15 @@ import '../App.css';
 
 //import des images
 import iconAccelerate from '../images/accelerate.png'
+import iconAccelerate1 from '../images/accelerateV1.png'
+import iconAccelerate2 from '../images/accelerateV2.png'
+import iconAccelerate3 from '../images/accelerateV3.png'
+import iconAccelerate1Grey from '../images/accelerateV1GREY.png'
+import iconAccelerate2Grey from '../images/accelerateV2GREY.png'
+import iconAccelerate3Grey from '../images/accelerateV3GREY.png'
 import iconUpload from '../images/upload.png'
-import iconDecrease from '../images/decrease.png'
-import iconPlay from '../images/play.png'
-
-
+import iconUploadGrey from '../images/uploadGREY.png'
+import iconStop from '../images/stop.png'
 
 // composant fonctionnel React
 const Map = () => {
@@ -33,22 +37,26 @@ const Map = () => {
   const [salesCounter, setSalesCounter] = useState([])
   const [countriesArray, setCountriesArray] = useState([])
   const [salesSum, setSalesSum] = useState(0)
+  const timerRef = useRef(null)
 
 
   // regex pattern utilisé pour ré-écrire la date de vente initiale dans un format de date reconnu en JS. ex: On passera de 24/12/2020 à 2020-12-24
   var dateFormatPattern = /(\d{2})\/(\d{2})\/(\d{4})/;
 
+
   // FONCTION GERANT L'UPLOAD DU CSV ET LA CONSERSION EN TALBEAU JS EXPLOITABLE
   const handleUploading = async (files) => {
 
     setSalesDeployment([])
-    setPlaySpeed(1)
     setCountriesArray([])
     setSalesCounter([])
     setSalesSum(0)
     setGeocodingProblem(false)
     setSales([])
     setDateOnMap('')
+    setStartDeployment(0)
+    clearTimeout(timerRef.current)
+
 
     //upload des données du fichier CSV
     var reader = new FileReader();
@@ -97,7 +105,8 @@ const Map = () => {
 
 
   // fonction déclanchant la lecture de l'animation
-  const handlePlay = () => {
+  const handlePlayV1 = () => {
+    setPlaySpeed(1)
     setSalesDeployment([])
     setStartDeployment(startDeployment + 1)
     setCountriesArray([])
@@ -107,17 +116,66 @@ const Map = () => {
     setDateOnMap('')
   };
 
-  // quand on clique sur PLAY, le déploiement des markers se fait progressivement sur la carte 
-  useEffect(() => {
+  // fonction déclanchant la lecture de l'animation
+  const handlePlayV2 = () => {
+    setPlaySpeed(2)
+    setSalesDeployment([])
+    setStartDeployment(startDeployment + 1)
+    setCountriesArray([])
+    setSalesCounter([])
+    setSalesSum(0)
+    setGeocodingProblem(false)
+    setDateOnMap('')
+  };
 
-    // fonction d'ajout d'une vente à l'array qui est mappée ensuite dans le composant Marker
-    var moreSales = (sale) => {
+  // fonction déclanchant la lecture de l'animation
+  const handlePlayV3 = () => {
+    setPlaySpeed(3)
+    setSalesDeployment([])
+    setStartDeployment(startDeployment + 1)
+    setCountriesArray([])
+    setSalesCounter([])
+    setSalesSum(0)
+    setGeocodingProblem(false)
+    setDateOnMap('')
+  };
+
+  function setDeployment() {
+    sales.forEach((element) => {
+      // appel de la fonction moreSales à la ligne 136 avec un minuteur dépendant de l'écart de temps entre 2 ventes
+      timerRef.current = setTimeout(() => {
+        moreSales(element); stop();
+      }, (Math.round(element[5].splitTime / (2678400 * playSpeed)) + 1)
+      )
+    });
+
+    return stop;
+
+    function stop() {
+      if (startDeployment === 0) {
+        clearTimeout(timerRef.current);
+      }
+    }
+  }
+
+  // quand on clique sur PLAY, le déploiement des markers se fait progressivement sur la carte 
+  useEffect(
+    () => {
+      if (sales.length > 0) {
+        setDeployment()
+      }
+    }, [startDeployment])
+
+
+  // fonction d'ajout d'une vente à l'array qui est mappée ensuite dans le composant Marker
+  var moreSales = (sale) => {
+    if (startDeployment !== 0) {
       setDateOnMap(sale[2].slice(1, 20).slice(0, -1).toString())
 
       var justPostalCode = sale[0].slice(1, 20).slice(0, -1).toString()
       var justCountry = sale[1].slice(1, 20).slice(0, -1).toString()
 
-      if(justCountry === 'Corse'){
+      if (justCountry === 'Corse') {
         var address = `${justPostalCode}, France`
       } else {
         var address = `${justPostalCode}, ${justCountry}`
@@ -125,7 +183,7 @@ const Map = () => {
 
       if (countriesArray.length <= sales.length) {
         // ajout en array des pays à chaque fois qu'une vente est faite. Ce sera utilisé en ligne 159, là où on crée un compteur de ventes par pays
-        if(justCountry === 'Corse'){
+        if (justCountry === 'Corse') {
           setCountriesArray(countriesArray => [...countriesArray, 'France'])
         } else {
           setCountriesArray(countriesArray => [...countriesArray, justCountry])
@@ -143,20 +201,11 @@ const Map = () => {
         ).then(
           () => {
             setSalesDeployment((salesDeployment) => [...salesDeployment, sale]);
+            setGeocodingProblem(false)
           }
         )
     }
-
-    if (sales.length > 0) {
-      sales.forEach((element) => {
-        // appel de la fonction moreSales avec un minuteur dépendant de l'écart de temps entre 2 ventes
-        setTimeout(() => {
-          moreSales(element);
-        }, (Math.round(element[5].splitTime / (2678400 * playSpeed)) + 1))
-      });
-    }
-
-  }, [startDeployment, playSpeed])
+  }
 
 
   useEffect(() => {
@@ -189,15 +238,6 @@ const Map = () => {
     })
   }, [salesDeployment])
 
-  // fonction de diminution de la vitesse de lecture 
-  const handleDecrease = () => {
-    setPlaySpeed(playSpeed / 1.2)
-  };
-
-  // fonction l'accélération de la vitesse de lecture 
-  const handleAccelerate = () => {
-    setPlaySpeed(playSpeed * 1.2)
-  };
 
   // paramétrage de la library @react-google-maps/api
   const onLoad = useCallback((map) => setMap(map), []);
@@ -260,13 +300,15 @@ const Map = () => {
 
   // message affiché en cas de problème
   var errorGeocoding
-  if (geocodingProblem === true) {
-    errorGeocoding = < div className="errorMessage" >
-      <p>PROBLEME AVEC AU MOINS UNE POSITION GPS </p>
-      <p>C'est probablement lié à l'API de geocoding de Google.</p>
-      <p>Si elle a reçu trop de requêtes, elle ne répondra plus... ☹</p>
-    </div >
-  }
+  useEffect(() => {
+    if (geocodingProblem === true) {
+      errorGeocoding = < div className="errorMessage" >
+        <p>PROBLEME AVEC AU MOINS UNE POSITION GPS </p>
+        <p>C'est probablement lié à l'API de geocoding de Google.</p>
+        <p>Si elle a reçu trop de requêtes, elle ne répondra plus... ☹</p>
+      </div >
+    }
+  }, [geocodingProblem])
 
   // GOOGLE MAPS STYLE
   const containerStyle = {
@@ -275,65 +317,102 @@ const Map = () => {
   };
 
 
+
   return (
 
     <div>
 
       {errorGeocoding}
 
-      <div className="commands">
+      <div>
         <div
-          className="rows"
+          className="flou1"
         >
-          <ReactFileReader
-            fileTypes={[".csv"]}
-            multipleFiles={false}
-            handleFiles={handleUploading}>
-            <img
+          <img
+            className="buttons"
+            src={iconStop}
+            onClick={() => window.location.reload(false)}
+            alt="stop"
+          />
+          {salesDeployment.length === 0 || salesDeployment.length === sales.length
+            ? <ReactFileReader
+              fileTypes={[".csv"]}
+              multipleFiles={false}
+              handleFiles={handleUploading}>
+              <img
+                className="buttons"
+                src={iconUpload}
+                alt="upload"
+              />
+            </ReactFileReader>
+            : <img
               className="buttons"
-              src={iconUpload}
+              src={iconUploadGrey}
               alt="upload"
             />
-          </ReactFileReader>
-          <img
-            className="buttons"
-            src={iconPlay}
-            onClick={handlePlay}
-            alt="play"
-          />
+          }
 
+
+          {salesDeployment.length === 0 || salesDeployment.length === sales.length
+            ? <img
+              className="buttons"
+              src={iconAccelerate1}
+              onClick={handlePlayV1}
+              alt="play"
+            />
+            : <img
+              className="buttons"
+              src={iconAccelerate1Grey}
+              alt="play"
+            />
+          }
+          {salesDeployment.length === 0 || salesDeployment.length === sales.length
+            ? <img
+              className="buttons"
+              src={iconAccelerate2}
+              onClick={handlePlayV2}
+              alt="play"
+            />
+            : <img
+              className="buttons"
+              src={iconAccelerate2Grey}
+              alt="play"
+            />
+          }
+          {salesDeployment.length === 0 || salesDeployment.length === sales.length
+            ? <img
+              className="buttons"
+              src={iconAccelerate3}
+              onClick={handlePlayV3}
+              alt="play"
+            />
+            : <img
+              className="buttons"
+              src={iconAccelerate3Grey}
+              alt="play"
+            />
+          }
         </div>
-        <div
-          className="rows"
-        >
-          <img
-            className="buttons"
-            src={iconDecrease}
-            onClick={handleDecrease}
-            alt="decrease"
-          />
-          <img
-            className="buttons"
-            src={iconAccelerate}
-            onClick={handleAccelerate}
-            alt="accelerate"
-          />
+
+        <div className="flou2">
+          <div >
+
+            {dateOnMap !== "" &&
+              <p className="salesByCountry" style={{ paddingBottom: "10px" }}>
+                {dateOnMap}
+              </p>
+            }
+            {salesCounter.length > 0 &&
+              <p className="salesByCountry salesTotal">Ventes : {salesSum}</p>
+
+            }
+            {salesCounter.length > 0 &&
+              salesCounter.map(country =>
+                <p className="salesByCountry">{country}</p>
+              )
+            }
+          </div>
         </div>
-
-        {dateOnMap !== "" &&
-          <p className="salesByCountry" style={{ paddingBottom: "10px" }}>
-            {dateOnMap}
-          </p>
-        }
-        {salesCounter.length > 0 &&
-          <p className="sales">Ventes : {salesSum}</p>
-
-        }
-        {salesCounter.length > 0 &&
-          salesCounter.map(country =>
-            <p className="salesByCountry">{country}</p>
-          )
-        }
       </div>
 
       <LoadScript
@@ -343,6 +422,7 @@ const Map = () => {
         <GoogleMap
           mapContainerStyle={containerStyle}
           onLoad={onLoad}
+
         >
 
           {salesDeployment.length > 0 &&

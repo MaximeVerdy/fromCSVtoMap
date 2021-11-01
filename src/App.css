@@ -8,32 +8,45 @@
   top: 50px;
   left: 2px;
   padding: 5px;
+}
+
+.flou1 {
+  position: absolute;
+  display: flex;
+  z-index: 1;
+  top: 52px;
+  left: 3px;
+  padding: 5px;
   border-radius: 15px;
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
 }
 
-.rows {
-  display: flex;
-  padding: 0px;
+.flou2 {
+  position: absolute;
+  z-index: 1;
+  top: 90px;
+  left: 3px;
+  padding: 5px;
+  border-radius: 15px;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
 }
 
 .buttons {
   padding-top: 2px;
-  padding: 0px 3px;
-  height: 43px;
+  padding: 0px 2px;
+  height: 30px;
 }
 
 .salesByCountry {
   padding-left: 3px;
   height: 8px;
   font-size: 17px;
+  width: 100%;
 }
 
-.sales {
-  padding-left: 3px;
-  height: 8px;
-  font-size: 17px;
+.salesTotal {
   font-weight: 650;
 }
 
