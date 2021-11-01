@@ -218,7 +218,7 @@ const Map = () => {
 
       // si c'est la 1ère vente dans ce pays
       if (matchInsalesCounter.length === 0) {
-        setSalesSum(salesSum + 1)
+        setSalesSum(salesDeployment.length)
         setSalesCounter(salesCounter => [...salesCounter, `${country} : 1`])
 
         // sinon recherche de la place du pays par odre chronologique d'apparition et modification du nombre de ventes associé
@@ -230,7 +230,7 @@ const Map = () => {
           allInfos,
           ...salesCounter.slice(index + 1)
         ]
-        setSalesSum(salesSum + 1)
+        setSalesSum(salesDeployment.length)
         setSalesCounter(changeInArray)
       }
 
