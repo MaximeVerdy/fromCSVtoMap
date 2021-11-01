@@ -9,7 +9,6 @@ import ReactFileReader from 'react-file-reader';
 import '../App.css';
 
 //import des images
-import iconAccelerate from '../images/accelerate.png'
 import iconAccelerate1 from '../images/accelerateV1.png'
 import iconAccelerate2 from '../images/accelerateV2.png'
 import iconAccelerate3 from '../images/accelerateV3.png'
@@ -422,7 +421,7 @@ const Map = () => {
         <GoogleMap
           mapContainerStyle={containerStyle}
           onLoad={onLoad}
-
+          options={{ mapId: "dfcaa6af811a8b4c" }}
         >
 
           {salesDeployment.length > 0 &&
