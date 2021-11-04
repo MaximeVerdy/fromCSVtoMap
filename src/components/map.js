@@ -212,7 +212,7 @@ const Map = () => {
     // création d'un compteur de ventes par pays
     countriesArray.forEach(country => {
 
-      var matchIncountriesArray = countriesArray.filter(element => element.includes(country))
+      var matchIncountriesArray = countriesArray.filter(element => element.includes(country))  // console log matchIncountriesArray
       var matchInsalesCounter = salesCounter.filter(element => element.includes(country))
       var index = salesCounter.indexOf(matchInsalesCounter[0])
 

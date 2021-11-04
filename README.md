@@ -1,10 +1,11 @@
 ### from CSV to map est une application React
+### Elle fait apparaître les markers Google maps en fonction des dates assignées
 
-[Screenshot de l'application](https://i.ibb.co/XZ1XSWX/Screenshot-1.jpg)
+[Screenshot de l'application](https://i.ibb.co/8z7jGLH/Screenshot-2.jpg)
 
 #### Fonctionnement :
   
-* uploadez un fichier CVS avec dates et adresses (ex : une chronologie de ventes)
+* uploadez un fichier CVS avec dates et adresses (ex : des ventes)
 * le fichier CSV doit être formulé ainsi :
 ```
 postcode;country;date;
@@ -12,17 +13,8 @@ postcode;country;date;
 "88046";"Italie";"01/06/2016";
 "83043";"Allemagne";"01/01/2016";
 ```
-* l'app convertit les données en tableau JS
-* cliquez sur PLAY
-* les adresses sont converties en coordonnées GPS
-* de ce nouveau tableau, les markers correspondant aux ventes s'affichent chronologiquement sous forme de caddies sur la carte Google maps
-* un compteur affichent l'augmentation du nombre de ventes par pays au fur et à mesure du déploiement des markers
-
-
-#### Fonctionnalités et technologies utilisées : 
-
-* Le Frontend a été bootstrappé avec Create React App
-* l'upload du fichier se fait grâce à la library react-file-reader
-* la conversion du CSV se fait grâce à la library convert-csv-to-array 
-* le geocoding (conversion d'adresses en coordonnées GPS) se fait grâce à la library react-geocode
-* l'affichage sur la carte Google Maps se fait grâce à la library @react-google-maps/api
+* l'app convertit les données en tableau JS exploitable par l'application
+* cliquez sur PLAY (3 vitesses de déploiement possibles)
+* les adresses sont converties en coordonnées GPS / geocoding en faisant appel à l'API de Google Maps
+* de ce nouveau tableau, les markers correspondant aux ventes s'affichent chronologiquement sur une carte Google maps
+* plusieurs compteurs affichent l'augmentation du nombre de ventes par pays au fur et à mesure du déploiement des markers
