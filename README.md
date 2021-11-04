@@ -3,6 +3,8 @@
 
 
 [Screenshot de l'application](https://i.ibb.co/8z7jGLH/Screenshot-2.jpg)
+<img src="public/Screenshot_1.jpg" width="100">
+![sreenshot](public/Screenshot_1.jpg)
 
 #### Fonctionnement :
   
