@@ -1,8 +1,8 @@
 ### from CSV to map est une application React
-### Elle fait apparaître les markers Google maps en fonction des dates assignées
+## Elle fait apparaître les markers Google maps en fonction des dates assignées
+
 
 [Screenshot de l'application](https://i.ibb.co/8z7jGLH/Screenshot-2.jpg)
-
 
 #### Fonctionnement :
   
