@@ -5,7 +5,7 @@
 
 #### Fonctionnement :
   
-* *à partir d'un fichier CSV initial avec adresses et dates (ex : des ventes) :*
+* *à partir d'un fichier CSV initial avec adresses et dates (ex : des ventes) formulé ainsi :*
 ```
 postcode;country;date;
 "10440";"France";"01/01/2015";
