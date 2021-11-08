@@ -1,4 +1,4 @@
-### from CSV to map est une application React
+### from CSV to MAP est une application React
 #### Elle fait apparaître des markers sur Google maps en fonction des dates assignées dans un fichier CSV
 
 ![sreenshot](public/Screenshot_1.jpg)
@@ -12,7 +12,7 @@ postcode;country;date;
 "88046";"Italie";"01/06/2016";
 "83043";"Allemagne";"01/01/2016";
 ```
-* uploadez le fichier CVS sur l'application from CSV to map
+* uploadez le fichier CVS sur l'application from CSV to MAP
 * l'app convertit les données en tableau JS exploitable par l'application
 * cliquez sur PLAY (3 vitesses de déploiement possibles)
 * les adresses sont converties en coordonnées GPS / geocoding en faisant appel à l'API de Google Maps
