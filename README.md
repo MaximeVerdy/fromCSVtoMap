@@ -9,9 +9,9 @@
 * *le fichier CSV doit être formulé ainsi :*
 _```
 _postcode;country;date;_
-"10440";"France";"01/01/2015";
-"88046";"Italie";"01/06/2016";
-"83043";"Allemagne";"01/01/2016";
+_"10440";"France";"01/01/2015";_
+_"88046";"Italie";"01/06/2016";_
+_"83043";"Allemagne";"01/01/2016";_
 ```_
 * l'app convertit les données en tableau JS exploitable par l'application
 * cliquez sur PLAY (3 vitesses de déploiement possibles)
