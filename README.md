@@ -6,7 +6,7 @@
 #### Fonctionnement :
   
 * uploadez un fichier CVS avec dates et adresses (ex : des ventes)
-* *le fichier CSV doit être formulé ainsi :*
+*le fichier CSV doit être formulé ainsi :*
 ```
 postcode;country;date;
 "10440";"France";"01/01/2015";
